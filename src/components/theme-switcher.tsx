@@ -96,7 +96,7 @@ const ThemeSwitcherWithText = () => {
         <span className="text-muted-foreground font-semibold">Tema: </span>
         <span>{themeSpanish}</span>
       </div>
-      <div className="flex items-center gap-3 justify-center">
+      <div className="flex items-center gap-3 justify-center sm:justify-start">
         <span className="text-muted-foreground font-semibold">
           Cambiar tema:{" "}
         </span>

@@ -79,7 +79,6 @@ export default async function AuthButton() {
         className="hover:underline hover:underline-offset-4">
         Registrarse
       </Link>
-      <Separator orientation="horizontal" className="sm:hidden" />
     </div>
   );
 }
