@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import { CircleUser } from "lucide-react";
+import { Separator } from "./ui/separator";
 
 export default async function AuthButton() {
   const {
@@ -62,31 +63,15 @@ export default async function AuthButton() {
       </DropdownMenu>
     </div>
   ) : (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-col sm:flex-row items-center gap-4">
       <p className="font-semibold">Invitado</p>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <CircleUser />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Link href="/sign-in">Loguearse</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/sign-up">Registrarse</Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Separator orientation="horizontal" className="sm:hidden" />
+      <Separator orientation="vertical" className="h-[20px] hidden" />
+      <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
+      <Link href="/sign-in">Loguearse</Link>
+      <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
+      <Link href="/sign-up">Registrarse</Link>
+      <Separator orientation="horizontal" className="sm:hidden" />
     </div>
-    // <div className="flex gap-2">
-    //   <Button asChild size="sm" variant={"outline"}>
-    //     <Link href="/sign-in">Loguearse</Link>
-    //   </Button>
-    //   <Button asChild size="sm" variant={"default"}>
-    //     <Link href="/sign-up">Registrarse</Link>
-    //   </Button>
-    // </div>
   );
 }

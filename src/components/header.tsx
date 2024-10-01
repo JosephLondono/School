@@ -1,8 +1,21 @@
 import Link from "next/link";
-import React from "react";
 import HeaderAuth from "@/src/components/header-auth";
+import HeaderAuthMobile from "@/src/components/header-auth-mobile";
+
 import Image from "next/image";
 import { ThemeSwitcher } from "./theme-switcher";
+import { Menu } from "lucide-react";
+
+import { Separator } from "./ui/separator";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/src/components/ui/sheet";
 
 export default function Header() {
   return (
@@ -23,7 +36,9 @@ export default function Header() {
               Colegio Los Alpes
             </Link>
           </div>
-          <div className="flex items-center gap-5">
+
+          {/* Menú en pantallas grandes */}
+          <div className="hidden md:items-center gap-5 md:flex">
             <Link
               href={"/"}
               className="hover:underline hover:underline-offset-4">
@@ -39,10 +54,44 @@ export default function Header() {
               className="hover:underline hover:underline-offset-4">
               Calendario
             </Link>
-            |
+            <Separator orientation="vertical" className="h-[20px]" />
             <ThemeSwitcher />
-            |
+            <Separator orientation="vertical" className="h-[20px]" />
             <HeaderAuth />
+          </div>
+
+          {/* Botón de menú en pantallas pequeñas */}
+          <div className="items-center gap-5 flex md:hidden">
+            <Sheet>
+              <SheetTrigger>
+                <Menu size={25} />
+              </SheetTrigger>
+              <SheetContent side="left">
+                <SheetHeader>
+                  <SheetTitle>Explorar</SheetTitle>
+                  <SheetDescription>
+                    <ol>
+                      <li>
+                        <Link href={"/"}>Inicio</Link>
+                      </li>
+                      <li>
+                        <Link href={"/contact"}>Contacto</Link>
+                      </li>
+                      <li>
+                        <Link href={"/calendar"}>Calendario</Link>
+                      </li>
+                    </ol>
+                  </SheetDescription>
+                </SheetHeader>
+                <Separator orientation="horizontal" className="my-3" />
+                <SheetHeader>
+                  <SheetTitle>Cuenta</SheetTitle>
+                  <SheetDescription>
+                    <HeaderAuthMobile />
+                  </SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </nav>
