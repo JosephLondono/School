@@ -66,8 +66,8 @@ export const Footer = () => {
   ];
   return (
     <footer className="w-full text-xs gap-8 py-12 bg-[#019e1bee] mt-4 text-white">
-      <div className="w-4/5 mx-auto grid grid-cols-3 justify-center justify-items-center">
-        <div>
+      <div className="md:gap-6 lg:w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center justify-items-center">
+        <div className="min-w-[280px]">
           <span className="text-2xl relative">
             Enlaces Rapidos
             <hr className="w-full absolute border-t-[3px]" />
@@ -85,7 +85,7 @@ export const Footer = () => {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="min-w-[280px]">
           <span className="text-2xl relative">
             Informacion
             <hr className="w-full absolute border-t-[3px]" />
@@ -122,13 +122,13 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
-        <div>
+        <div className="min-w-[280px]">
           <span className="text-2xl relative">
             Redes Sociales
             <hr className="w-full absolute border-t-[3px]" />
             <hr className="w-[50px] absolute border-t-[3px] border-[#00fd09] z-20 right-0" />
           </span>
-          <ul className="mt-4 flex gap-4 justify-center">
+          <ul className="min-w-[170px] mt-4 flex gap-4 justify-center">
             {SocialMedia.map((social) => (
               <li key={social.title}>
                 <Link href={social.href} target="_blank">
