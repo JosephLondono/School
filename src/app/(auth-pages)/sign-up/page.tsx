@@ -31,35 +31,31 @@ export default async function Signup({
   }
   return (
     <>
-      <div className="items-center">
-        <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-          <h1 className="text-2xl font-medium">Registrarse</h1>
-          <p className="text-sm text text-foreground">
-            ¿Ya tienes una cuenta?{" "}
-            <Link
-              className="text-primary font-medium underline"
-              href="/sign-in">
-              Logueate
-            </Link>
-          </p>
-          <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-            <Label htmlFor="email">Correo</Label>
-            <Input name="email" placeholder="you@example.com" required />
-            <Label htmlFor="password">Contraseña</Label>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Your password"
-              minLength={6}
-              required
-            />
-            <SubmitButton formAction={signUpAction} pendingText="Signing up...">
-              Registrarse
-            </SubmitButton>
-            <FormMessage message={searchParams} />
-          </div>
-        </form>
-      </div>
+      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+        <h1 className="text-2xl font-medium">Registrarse</h1>
+        <p className="text-sm text text-foreground">
+          ¿Ya tienes una cuenta?{" "}
+          <Link className="text-primary font-medium underline" href="/sign-in">
+            Logueate
+          </Link>
+        </p>
+        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+          <Label htmlFor="email">Correo</Label>
+          <Input name="email" placeholder="you@example.com" required />
+          <Label htmlFor="password">Contraseña</Label>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Your password"
+            minLength={6}
+            required
+          />
+          <SubmitButton formAction={signUpAction} pendingText="Signing up...">
+            Registrarse
+          </SubmitButton>
+          <FormMessage message={searchParams} />
+        </div>
+      </form>
     </>
   );
 }

@@ -23,40 +23,36 @@ export default async function Login({
     return redirect("/protected");
   }
   return (
-    <div className="items-center">
-      <form className="flex-1 flex flex-col min-w-64">
-        <h1 className="text-2xl font-medium">Loguearse</h1>
-        <p className="text-sm text-foreground">
-          ¿No tienes cuenta?{" "}
+    <form className="flex-1 flex flex-col min-w-64">
+      <h1 className="text-2xl font-medium">Loguearse</h1>
+      <p className="text-sm text-foreground">
+        ¿No tienes cuenta?{" "}
+        <Link className="text-foreground font-medium underline" href="/sign-up">
+          Registrate
+        </Link>
+      </p>
+      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+        <Label htmlFor="email">Correo</Label>
+        <Input name="email" placeholder="you@example.com" required />
+        <div className="flex justify-between items-center">
+          <Label htmlFor="password">Contraseña</Label>
           <Link
-            className="text-foreground font-medium underline"
-            href="/sign-up">
-            Registrate
+            className="text-xs text-foreground underline"
+            href="/forgot-password">
+            ¿Contraseña olvidada?
           </Link>
-        </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-          <Label htmlFor="email">Correo</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <div className="flex justify-between items-center">
-            <Label htmlFor="password">Contraseña</Label>
-            <Link
-              className="text-xs text-foreground underline"
-              href="/forgot-password">
-              ¿Contraseña olvidada?
-            </Link>
-          </div>
-          <Input
-            type="password"
-            name="password"
-            placeholder="Your password"
-            required
-          />
-          <SubmitButton pendingText="Signing In..." formAction={signInAction}>
-            Loguearse
-          </SubmitButton>
-          <FormMessage message={searchParams} />
         </div>
-      </form>
-    </div>
+        <Input
+          type="password"
+          name="password"
+          placeholder="Your password"
+          required
+        />
+        <SubmitButton pendingText="Signing In..." formAction={signInAction}>
+          Loguearse
+        </SubmitButton>
+        <FormMessage message={searchParams} />
+      </div>
+    </form>
   );
 }

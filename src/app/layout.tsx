@@ -31,8 +31,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           <Header />
-          <main className="min-h-[89vh] flex flex-col items-center justify-center">
-            <div className="w-4/5">{children}</div>
+          <main className="min-h-[89vh] flex flex-col items-center w-4/5 mx-auto">
+            {children}
           </main>
           <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
             <p>
