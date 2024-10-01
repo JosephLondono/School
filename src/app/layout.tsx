@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Header from "@/src/components/header";
+import { Footer } from "../components/Footer";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -34,19 +35,7 @@ export default function RootLayout({
           <main className="min-h-[89vh] flex flex-col items-center w-4/5 mx-auto">
             {children}
           </main>
-          <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-            <p>
-              Powered by{" "}
-              <a
-                href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                target="_blank"
-                className="font-bold hover:underline"
-                rel="noreferrer">
-                Supabase
-              </a>
-            </p>
-            <ThemeSwitcher />
-          </footer>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
