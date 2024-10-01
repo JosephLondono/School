@@ -66,7 +66,7 @@ export const Footer = () => {
   ];
   return (
     <footer className="w-full text-xs gap-8 py-12 bg-[#019e1bee] mt-4 text-white">
-      <div className="md:gap-6 lg:w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center justify-items-center">
+      <div className="gap-6 md:gap-0 lg:w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center justify-items-center">
         <div className="min-w-[280px]">
           <span className="text-2xl relative">
             Enlaces Rapidos
