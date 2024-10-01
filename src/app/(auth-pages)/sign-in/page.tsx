@@ -23,7 +23,7 @@ export default async function Login({
     return redirect("/protected");
   }
   return (
-    <form className="flex-1 flex flex-col min-w-64">
+    <form className="flex-1 flex flex-col min-w-64 mx-auto justify-center">
       <h1 className="text-2xl font-medium">Loguearse</h1>
       <p className="text-sm text-foreground">
         ¿No tienes cuenta?{" "}

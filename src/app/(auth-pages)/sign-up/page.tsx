@@ -31,7 +31,7 @@ export default async function Signup({
   }
   return (
     <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+      <form className="flex-1 flex flex-col min-w-64 mx-auto justify-center">
         <h1 className="text-2xl font-medium">Registrarse</h1>
         <p className="text-sm text text-foreground">
           ¿Ya tienes una cuenta?{" "}
