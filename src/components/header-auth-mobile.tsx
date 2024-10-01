@@ -43,26 +43,19 @@ export default async function AuthButton() {
     );
   }
   return user ? (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-col sm:flex-row items-center gap-4">
       <p className="font-semibold">{user.email?.split("@")[0]}</p>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <CircleUser />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <form action={signOutAction}>
-              <Button type="submit" variant="ghost" className="p-0 h-fit">
-                Salir
-              </Button>
-            </form>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Separator orientation="horizontal" className="sm:hidden" />
+      <Separator orientation="vertical" className="h-[20px] hidden" />
+      <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
+      <form action={signOutAction}>
+        <Button type="submit" variant="ghost" className="p-0 h-fit">
+          Salir
+        </Button>
+      </form>
     </div>
   ) : (
+    // usuarios no logeados
     <div className="flex flex-col sm:flex-row items-center gap-4">
       <p className="font-semibold">Invitado</p>
       <Separator orientation="horizontal" className="sm:hidden" />
