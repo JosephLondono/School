@@ -33,6 +33,7 @@ export function CarouselPlugin() {
                     src={`/images/slider/img-1.png`}
                     fill={true}
                     alt="Imagen Slider"
+                    priority={true}
                     className="opacity-90 blur-[2px]"
                   />
                   <span className="text-4xl font-semibold z-10 text-[#0ced41] absolute block bottom-14 right-12">
