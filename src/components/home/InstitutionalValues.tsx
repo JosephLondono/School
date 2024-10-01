@@ -53,10 +53,10 @@ export const InstitutionalValues = () => {
     },
   ];
 
-  const isCentered = values.length % 4 === 2; // Para detectar si sobran solo 2 valores
+  const isCentered = values.length % 4 === 2;
 
   return (
-    <div className="w-full mt-5">
+    <div className="w-full mt-5 mb-5">
       <h2 className="text-3xl text-[#0ced41] font-medium">
         Valores Institucionales
       </h2>
@@ -65,7 +65,7 @@ export const InstitutionalValues = () => {
         {values.map(({ title, description, icon }, index) => (
           <section
             key={index}
-            className={`bg-[#fffbe6] rounded-lg px-4 py-4 w-64 ${
+            className={`bg-[#fffbe6] rounded-lg px-4 py-4 w-64 shadow-lg shadow-lime-300/80 ${
               isCentered && index >= values.length - 2
                 ? index === values.length - 2
                   ? "col-start-2"
