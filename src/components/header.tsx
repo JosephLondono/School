@@ -3,7 +3,7 @@ import HeaderAuth from "@/src/components/header-auth";
 import HeaderAuthMobile from "@/src/components/header-auth-mobile";
 
 import Image from "next/image";
-import { ThemeSwitcher } from "./theme-switcher";
+import { ThemeSwitcher, ThemeSwitcherWithText } from "./theme-switcher";
 import { Menu } from "lucide-react";
 
 import { Separator } from "./ui/separator";
@@ -72,13 +72,25 @@ export default function Header() {
                   <SheetDescription>
                     <ol>
                       <li>
-                        <Link href={"/"}>Inicio</Link>
+                        <Link
+                          className="hover:underline hover:underline-offset-4"
+                          href={"/"}>
+                          Inicio
+                        </Link>
                       </li>
                       <li>
-                        <Link href={"/contact"}>Contacto</Link>
+                        <Link
+                          className="hover:underline hover:underline-offset-4"
+                          href={"/contact"}>
+                          Contacto
+                        </Link>
                       </li>
                       <li>
-                        <Link href={"/calendar"}>Calendario</Link>
+                        <Link
+                          className="hover:underline hover:underline-offset-4"
+                          href={"/calendar"}>
+                          Calendario
+                        </Link>
                       </li>
                     </ol>
                   </SheetDescription>
@@ -88,6 +100,13 @@ export default function Header() {
                   <SheetTitle>Cuenta</SheetTitle>
                   <SheetDescription>
                     <HeaderAuthMobile />
+                  </SheetDescription>
+                </SheetHeader>
+                <Separator orientation="horizontal" className="my-3" />
+                <SheetHeader>
+                  <SheetTitle>Tema</SheetTitle>
+                  <SheetDescription>
+                    <ThemeSwitcherWithText />
                   </SheetDescription>
                 </SheetHeader>
               </SheetContent>

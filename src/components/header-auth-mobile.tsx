@@ -68,9 +68,17 @@ export default async function AuthButton() {
       <Separator orientation="horizontal" className="sm:hidden" />
       <Separator orientation="vertical" className="h-[20px] hidden" />
       <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
-      <Link href="/sign-in">Loguearse</Link>
+      <Link
+        href="/sign-in"
+        className="hover:underline hover:underline-offset-4">
+        Loguearse
+      </Link>
       <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
-      <Link href="/sign-up">Registrarse</Link>
+      <Link
+        href="/sign-up"
+        className="hover:underline hover:underline-offset-4">
+        Registrarse
+      </Link>
       <Separator orientation="horizontal" className="sm:hidden" />
     </div>
   );
