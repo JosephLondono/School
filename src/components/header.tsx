@@ -28,8 +28,8 @@ export default function Header() {
               className="flex items-center gap-5 hover:underline hover:underline-offset-4 text-lg">
               <Image
                 src="/logoSchool.png"
-                width={80}
-                height={80}
+                width={70}
+                height={70}
                 alt="Logo Colegio Los Alpes"
                 className="aspect-square object-contain"
               />
