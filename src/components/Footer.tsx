@@ -128,7 +128,7 @@ export const Footer = () => {
             <hr className="w-full absolute border-t-[3px]" />
             <hr className="w-[50px] absolute border-t-[3px] border-[#00fd09] z-20 right-0" />
           </span>
-          <ul className="min-w-[170px] mt-4 flex gap-4 justify-center">
+          <ul className="min-w-[170px] mt-4 flex gap-4">
             {SocialMedia.map((social) => (
               <li key={social.title}>
                 <Link href={social.href} target="_blank">
