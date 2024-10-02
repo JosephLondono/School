@@ -20,7 +20,7 @@ export default async function Login({
   } = await supabase.auth.getUser();
 
   if (user) {
-    return redirect("/protected");
+    return redirect("/dashboard");
   }
   return (
     <form className="flex-1 flex flex-col min-w-64 mx-auto justify-center">
