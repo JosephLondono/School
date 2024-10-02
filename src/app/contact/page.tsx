@@ -5,7 +5,11 @@ import { SubmitButton } from "@/src/components/submit-button";
 import { contactAction } from "@/src/app/actions";
 import { FormMessage, Message } from "@/src/components/form-message";
 
-export const ContactPage = ({ searchParams }: { searchParams: Message }) => {
+export default function ContactPage({
+  searchParams,
+}: {
+  searchParams: Message;
+}) {
   return (
     <LayoutPrincipal>
       <div className="flex flex-col items-center py-12 px-6">
@@ -54,13 +58,13 @@ export const ContactPage = ({ searchParams }: { searchParams: Message }) => {
           <SubmitButton pendingText="Enviando..." formAction={contactAction}>
             Enviar Mensaje
           </SubmitButton>
-          <div className="mt-3">
-            <FormMessage message={searchParams} />
-          </div>
+          {searchParams && (
+            <div className="mt-3">
+              <FormMessage message={searchParams} />
+            </div>
+          )}
         </form>
       </div>
     </LayoutPrincipal>
   );
-};
-
-export default ContactPage;
+}

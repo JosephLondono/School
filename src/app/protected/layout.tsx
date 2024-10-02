@@ -1,6 +1,6 @@
 import LayoutPrincipal from "@/src/components/home/Layout";
 
-export const layout = ({ children }: { children: React.ReactNode }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <LayoutPrincipal>
       <div className="w-full h-[87vh] flex flex-col gap-12 justify-center items-center">
@@ -8,6 +8,4 @@ export const layout = ({ children }: { children: React.ReactNode }) => {
       </div>
     </LayoutPrincipal>
   );
-};
-
-export default layout;
+}

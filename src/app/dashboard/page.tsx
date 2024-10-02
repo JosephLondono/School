@@ -1,7 +1,7 @@
 import { createClient } from "@/src/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-export const PageDashboard = async () => {
+export default async function PageDashboard() {
   const supabase = createClient();
   const {
     data: { user },
@@ -11,6 +11,4 @@ export const PageDashboard = async () => {
     return redirect("/sign-in");
   }
   return <div>Hola Dashboard</div>;
-};
-
-export default PageDashboard;
+}
