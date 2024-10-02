@@ -12,7 +12,7 @@ export const signUpAction = async (formData: FormData) => {
   const origin = headers().get("origin");
 
   if (!email || !password) {
-    return { error: "COrreo y Contraseña son requeridos" };
+    return { error: "Correo y Contraseña son requeridos" };
   }
 
   const { error } = await supabase.auth.signUp({
@@ -30,7 +30,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "success",
       "/sign-up",
-      "Te has registrado correctamente"
+      "Revisa tu correo para confirmar tu cuenta"
     );
   }
 };
@@ -53,7 +53,7 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-in", message);
   }
 
-  return redirect("/protected");
+  return redirect("/dashboard");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
@@ -117,6 +117,14 @@ export const resetPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
+    console.error(error);
+    if (error.code === "same_password") {
+      encodedRedirect(
+        "error",
+        "/protected/reset-password",
+        "La contraseña es la misma que la anterior"
+      );
+    }
     encodedRedirect(
       "error",
       "/protected/reset-password",
@@ -135,4 +143,18 @@ export const signOutAction = async () => {
   const supabase = createClient();
   await supabase.auth.signOut();
   return redirect("/sign-in");
+};
+
+export const contactAction = async (formData: FormData) => {
+  const supabase = createClient();
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const subject = formData.get("subject") as string;
+  const message = formData.get("message") as string;
+  console.log("DATA FORM CONTACT", name, email, subject, message);
+  encodedRedirect(
+    "success",
+    "/contact",
+    "Mensaje enviado correctamente, nos pondremos en contacto contigo"
+  );
 };
