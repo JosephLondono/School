@@ -4,11 +4,23 @@ import { SubmitButton } from "@/src/components/submit-button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 
+import { createClient } from "@/src/utils/supabase/server";
+import { redirect } from "next/navigation";
+
 export default async function ResetPassword({
   searchParams,
 }: {
   searchParams: Message;
 }) {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/sign-in");
+  }
   return (
     <form className="flex flex-col w-full max-w-md p-4 gap-2 [&>input]:mb-4">
       <h1 className="text-2xl font-medium">Restablecer Contraseña</h1>
