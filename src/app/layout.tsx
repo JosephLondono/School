@@ -1,4 +1,3 @@
-import { ThemeSwitcher } from "@/src/components/theme-switcher";
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
@@ -31,11 +30,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          <Header />
-          <main className="min-h-[89vh] flex flex-col items-center w-4/5 mx-auto">
-            {children}
-          </main>
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>
