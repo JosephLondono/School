@@ -33,6 +33,7 @@ export default function Header() {
                 height={70}
                 alt="Logo Colegio Los Alpes"
                 className="aspect-square object-contain"
+                priority={true}
               />
               Colegio Los Alpes
             </Link>
