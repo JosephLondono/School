@@ -25,8 +25,6 @@ const PageMessages = async () => {
   let { data: contacts, error }: { data: Contact[] | null; error: any } =
     await supabase.from("contact").select("*");
 
-  console.log(contacts, error);
-
   return (
     <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
       <h1 className="text-3xl font-bold mb-6 text-center dark:text-green-400">
@@ -82,6 +80,15 @@ const PageMessages = async () => {
                     </TableRow>
                   )
                 )}
+              {error && (
+                <TableRow>
+                  <TableCell
+                    colSpan={5}
+                    className="text-red-500 dark:text-red-400">
+                    Ha occurido un error.
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
