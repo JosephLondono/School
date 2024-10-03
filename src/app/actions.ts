@@ -71,7 +71,13 @@ export const forgotPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
-    console.error(error.message);
+    if (error.code === "over_email_send_rate_limit") {
+      return encodedRedirect(
+        "error",
+        "/forgot-password",
+        "Demasiados correos enviados, intenta mas tarde"
+      );
+    }
     return encodedRedirect(
       "error",
       "/forgot-password",
