@@ -67,3 +67,10 @@
     @apply bg-background text-foreground;
   }
 }
+.fc-popover-header{
+  @apply dark:font-semibold dark:bg-gray-700 !important;
+}
+
+.fc-popover-body{
+  @apply dark:text-black dark:bg-gray-500 !important;
+}

@@ -8,17 +8,24 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/src/components/ui/tooltip";
+import { Maximize2 } from "lucide-react";
+
+interface Event {
+  title: string;
+  date: string;
+  description: string;
+}
 
 export default function CalendarPage() {
-  const events = [
+  const events: Event[] = [
     {
       title: "Futbol 5",
       date: "2024-10-01",
       description: "Torneo Futbol 5 en el coliseo de la institucion",
     },
     {
-      title: "Dia de la indenpendencia",
-      date: "2024-10-02",
+      title: "Dia de la independencia",
+      date: "2024-10-01",
       description: "Celebracion del dia de la independencia",
     },
     {
@@ -28,12 +35,12 @@ export default function CalendarPage() {
     },
     {
       title: "Dia de la madre",
-      date: "2024-10-18",
+      date: "2024-10-01",
       description: "Celebracion del dia de la madre",
     },
     {
       title: "Dia del maestro",
-      date: "2024-10-25",
+      date: "2024-10-01",
       description: "Celebracion del dia del maestro",
     },
   ];
@@ -43,11 +50,10 @@ export default function CalendarPage() {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="event-item">
-            <span className="event-bullet">•</span>
             <span className="event-title">{eventInfo.event.title}</span>
           </div>
         </TooltipTrigger>
-        <TooltipContent className="bg-green-500 dark:bg-green-100 text-white dark:text-green-800 text-sm p-2 rounded-md max-w-xs z-10">
+        <TooltipContent className="bg-gray-200 border border-gray-500 dark:bg-gray-800 text-black dark:text-white text-sm p-2 rounded-md max-w-xs z-[99999999999]">
           <p>{eventInfo.event.extendedProps.description}</p>
         </TooltipContent>
       </Tooltip>
@@ -75,7 +81,8 @@ export default function CalendarPage() {
         .fc-daygrid-event-harness {
           margin-bottom: 2px;
         }
-        .event-item {
+        .event-item,
+        .fc-more-link {
           display: flex;
           align-items: center;
           font-size: 0.8rem;
@@ -99,9 +106,23 @@ export default function CalendarPage() {
         .fc .fc-day-today {
           background-color: #bbf7d0 !important;
         }
+        .fc-more-link {
+          cursor: pointer;
+          display: block;
+          text-align: center;
+          border-radius: 4px;
+          background-color: #16a34a;
+          color: #ffffff;
+        }
+        .fc-more-link:hover {
+          background-color: white;
+          color: #16a34a;
+        }
+        .fc .fc-daygrid-more-link:hover {
+          background-color: #16a34a;
+        }
 
         /* Estilos para modo oscuro */
-
         .dark .fc-day-today {
           background-color: rgba(74, 222, 128, 0.2) !important;
         }
@@ -128,6 +149,9 @@ export default function CalendarPage() {
         .dark .fc th {
           background-color: #111827;
         }
+        .dark .fc-more-link {
+          color: rgb(209, 250, 229);
+        }
       `}</style>
       <FullCalendar
         locale={esLocale}
@@ -139,6 +163,14 @@ export default function CalendarPage() {
         eventDisplay="block"
         eventBackgroundColor="#16a34a"
         eventBorderColor="#16a34a"
+        eventTextColor="#ffffff"
+        dayMaxEvents={3}
+        moreLinkContent={
+          <p className="cursor-pointer px-2 bg-[#dcfce7] text-[#166534] text-[0.8rem] font-semibold rounded dark:bg-[#065f46] dark:text-textEvent h-[20px] flex items-center justify-center :hover:bg-[#16a34a] dark:hover:bg-[#16a34a] gap-1">
+            Ver más <Maximize2 size={11} />
+          </p>
+        }
+        height="auto"
       />
     </div>
   );
