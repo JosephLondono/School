@@ -46,11 +46,11 @@ export default function DashboardLayout({
       icon: <PiStar size={sizeIcon} />,
       href: "/dashboard/grades",
     },
-    {
-      label: "Asistencias",
-      icon: <IoIosCalendar size={sizeIcon} />,
-      href: "/dashboard/attendances",
-    },
+    // {
+    //   label: "Asistencias",
+    //   icon: <IoIosCalendar size={sizeIcon} />,
+    //   href: "/dashboard/attendances",
+    // },
     {
       label: "Mensajes",
       icon: <FaRegMessage size={sizeIcon} />,
