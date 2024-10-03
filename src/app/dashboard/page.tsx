@@ -22,7 +22,11 @@ export default async function PageDashboard() {
   }
 
   const { data: messages, error }: { data: Contact[] | null; error: any } =
-    await supabase.from("contact").select("*").limit(3);
+    await supabase
+      .from("contact")
+      .select("*")
+      .limit(3)
+      .order("id", { ascending: false });
 
   return (
     <div className="h-full overflow-y-scroll">
@@ -34,7 +38,7 @@ export default async function PageDashboard() {
               Mensajes
             </CardTitle>
             <CardDescription className="text-sm text-gray-500">
-              Lista de mensajes
+              Lista de los ultimos mensajes
             </CardDescription>
           </CardHeader>
           <CardContent className="p-3 bg-white shadow-sm rounded-lg">
