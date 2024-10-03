@@ -100,7 +100,7 @@ export default function DashboardLayout({
             </span>
           </div>
         </div>
-        <Separator className="bg-green-700 dark:bg-green-300 w-[90%]" />
+        <Separator className="bg-green-700 dark:bg-green-300 w-[50%]" />
         <nav className="w-full mt-2 overflow-y-auto flex-grow">
           <ul>
             {menuItems.map(({ label, href, icon }) => (
@@ -122,8 +122,8 @@ export default function DashboardLayout({
             ))}
           </ul>
         </nav>
-        <div className="mt-auto mb-4">
-          <Separator className="bg-green-700 dark:bg-green-300 w-[90%] mb-2" />
+        <div className="mt-auto mb-4 w-full">
+          <Separator className="bg-green-700 dark:bg-green-300 w-[50%] mb-2 mx-auto" />
           <div className="w-full flex justify-center items-center gap-4">
             <ThemeSwitcher />
             <FaCog

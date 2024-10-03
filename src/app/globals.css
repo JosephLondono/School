@@ -75,10 +75,9 @@
   @apply dark:text-black dark:bg-gray-500 !important;
 }
 .grid-dashboard {
-  height: 100%;
+  max-height: fit-content;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 16px;
   grid-row-gap: 16px;
 }
