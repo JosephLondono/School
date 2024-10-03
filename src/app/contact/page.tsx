@@ -5,6 +5,16 @@ import { SubmitButton } from "@/src/components/submit-button";
 import { contactAction } from "@/src/app/actions";
 import { FormMessage, Message } from "@/src/components/form-message";
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: "Pagina de contacto | Colegio Los Alpes",
+  description: "Pagina de contacto del colegio los alpes",
+};
+
 export default function ContactPage({
   searchParams,
 }: {

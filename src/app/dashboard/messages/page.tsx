@@ -12,6 +12,16 @@ import {
 } from "@/src/components/ui/table";
 import { redirect } from "next/navigation";
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: "Mensajes Dashboard | Colegio Los Alpes",
+  description: "Pagina de mensajes del colegio los alpes",
+};
+
 const PageMessages = async () => {
   const supabase = createClient();
   const {

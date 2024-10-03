@@ -7,6 +7,16 @@ import { Label } from "@/src/components/ui/label";
 import { createClient } from "@/src/utils/supabase/server";
 import { redirect } from "next/navigation";
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: "Restablecer contraseña | Colegio Los Alpes",
+  description: "Pagina de restablecer contraseña del colegio los alpes",
+};
+
 export default async function ResetPassword({
   searchParams,
 }: {

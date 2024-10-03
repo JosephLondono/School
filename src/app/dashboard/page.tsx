@@ -11,6 +11,16 @@ import { Contact } from "@/types/TableDataBases";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: "Dashboard | Colegio Los Alpes",
+  description: "Pagina de dashboard del colegio los alpes",
+};
+
 export default async function PageDashboard() {
   const supabase = createClient();
   const {

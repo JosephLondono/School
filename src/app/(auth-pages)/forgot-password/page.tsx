@@ -5,6 +5,16 @@ import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import Link from "next/link";
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: "Olvide la contraseña | Colegio Los Alpes",
+  description: "Pagina de olvido de contraseña del colegio los alpes",
+};
+
 export default function ForgotPassword({
   searchParams,
 }: {

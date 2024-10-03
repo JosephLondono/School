@@ -7,6 +7,16 @@ const JostFont = Jost({
   display: "swap",
 });
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: "Calendario | Colegio Los Alpes",
+  description: "Pagina de calendario del colegio los alpes",
+};
+
 const Calendar = () => {
   return (
     <LayoutPrincipal>
