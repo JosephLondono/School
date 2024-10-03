@@ -9,9 +9,11 @@ import {
   PiStudent,
 } from "react-icons/pi";
 import { IoHomeOutline } from "react-icons/io5";
-import { FaCalendarCheck, FaCog } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
+import { IoIosCalendar } from "react-icons/io";
+
 import { Separator } from "@/src/components/ui/separator";
 import { usePathname } from "next/navigation";
 import { ThemeSwitcher } from "@/src/components/theme-switcher";
@@ -30,11 +32,6 @@ export default function DashboardLayout({
       href: "/dashboard",
     },
     {
-      label: "Estudiantes",
-      icon: <PiStudent size={sizeIcon} />,
-      href: "/dashboard/students",
-    },
-    {
       label: "Profesores",
       icon: <PiChalkboardTeacherLight size={sizeIcon} />,
       href: "/dashboard/teachers",
@@ -51,7 +48,7 @@ export default function DashboardLayout({
     },
     {
       label: "Asistencias",
-      icon: <FaCalendarCheck size={sizeIcon} />,
+      icon: <IoIosCalendar size={sizeIcon} />,
       href: "/dashboard/attendances",
     },
     {
