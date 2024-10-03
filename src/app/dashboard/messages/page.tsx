@@ -10,9 +10,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table";
+import { redirect } from "next/navigation";
 
 const PageMessages = async () => {
   const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/sign-in");
+  }
 
   let { data: contacts, error }: { data: Contact[] | null; error: any } =
     await supabase.from("contact").select("*");
