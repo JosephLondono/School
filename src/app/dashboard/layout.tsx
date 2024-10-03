@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -7,11 +8,11 @@ import {
   PiStar,
   PiStudent,
 } from "react-icons/pi";
-
 import { IoHomeOutline } from "react-icons/io5";
 import { FaCalendarCheck, FaCog } from "react-icons/fa";
+import { FaRegMessage } from "react-icons/fa6";
+import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { Separator } from "@/src/components/ui/separator";
-
 import { usePathname } from "next/navigation";
 import { ThemeSwitcher } from "@/src/components/theme-switcher";
 
@@ -20,6 +21,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sizeIcon = 20;
   const menuItems = [
     {
@@ -52,12 +54,34 @@ export default function DashboardLayout({
       icon: <FaCalendarCheck size={sizeIcon} />,
       href: "/dashboard/attendances",
     },
+    {
+      label: "Mensajes",
+      icon: <FaRegMessage size={sizeIcon} />,
+      href: "/dashboard/messages",
+    },
   ];
   const pathName = usePathname();
 
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
   return (
     <main className="flex h-screen bg-green-100 dark:bg-green-900">
-      <aside className="w-64 flex flex-col items-center h-screen bg-green-200 dark:bg-green-800">
+      {/* Sidebar */}
+      <aside
+        className={`
+        fixed md:static inset-y-0 left-0 z-10
+        w-64 md:w-64 flex flex-col items-center h-screen
+        bg-green-200 dark:bg-green-800
+        transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        md:translate-x-0 transition-transform duration-300 ease-in-out
+      `}>
+        {/* Botón de toggle del sidebar */}
+        <button
+          className="md:hidden absolute top-0 right-0 z-20 text-black p-1 rounded-md"
+          onClick={toggleSidebar}>
+          <RiCloseLine size={24} />
+        </button>
+
         <div className="my-5 flex flex-col justify-center items-center">
           <h1 className="text-2xl text-green-900 dark:text-green-100">
             Panel de control
@@ -77,7 +101,7 @@ export default function DashboardLayout({
           </div>
         </div>
         <Separator className="bg-green-700 dark:bg-green-300 w-[90%]" />
-        <nav className="w-full mt-2">
+        <nav className="w-full mt-2 overflow-y-auto flex-grow">
           <ul>
             {menuItems.map(({ label, href, icon }) => (
               <li
@@ -87,7 +111,10 @@ export default function DashboardLayout({
                     ? "bg-green-500 dark:bg-green-700 text-white"
                     : "bg-green-300 dark:bg-green-600 text-green-900 dark:text-green-100"
                 }`}>
-                <Link href={href} className="flex items-center gap-2">
+                <Link
+                  href={href}
+                  className="flex items-center gap-2"
+                  onClick={() => setIsSidebarOpen(false)}>
                   <span>{label}</span>
                   {icon}
                 </Link>
@@ -95,15 +122,27 @@ export default function DashboardLayout({
             ))}
           </ul>
         </nav>
-        <div>
-          <Separator className="bg-green-700 dark:bg-green-300 w-[90%]" />
-          <div className="w-full flex justify-center items-center mt-2">
+        <div className="mt-auto mb-4">
+          <Separator className="bg-green-700 dark:bg-green-300 w-[90%] mb-2" />
+          <div className="w-full flex justify-center items-center gap-4">
             <ThemeSwitcher />
-            <FaCog size={sizeIcon} />
+            <FaCog
+              size={sizeIcon}
+              className="text-green-900 dark:text-green-100"
+            />
           </div>
         </div>
       </aside>
-      <section className="flex-grow bg-green-50 dark:bg-green-900 h-screen text-green-900 dark:text-green-100">
+
+      {/* Botón de menú para móviles (fuera del sidebar) */}
+      <button
+        className={`md:hidden fixed top-4 left-4 z-20 bg-green-500 text-white p-2 rounded-md ${isSidebarOpen ? "hidden" : "block"}`}
+        onClick={toggleSidebar}>
+        {!isSidebarOpen ? <RiMenu3Line size={24} /> : null}
+      </button>
+
+      {/* Contenido principal */}
+      <section className="flex-grow bg-green-50 dark:bg-green-900 h-screen overflow-y-auto text-green-900 dark:text-green-100 p-4 md:p-8">
         {children}
       </section>
     </main>
