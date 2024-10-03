@@ -12,10 +12,6 @@ import Link from "next/link";
 export const Footer = () => {
   const LinksFast = [
     {
-      title: "Sobre Nosotros",
-      href: "/",
-    },
-    {
       title: "Contactanos",
       href: "/contact",
     },
