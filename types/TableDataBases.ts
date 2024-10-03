@@ -6,3 +6,12 @@ export interface Contact {
   subject: string;
   message: string;
 }
+
+export interface Teacher {
+  id: number;
+  name: string;
+  id_document: number;
+  email: string;
+  phone: string;
+  Academic_Degree: string;
+}
