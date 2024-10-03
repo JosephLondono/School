@@ -153,11 +153,30 @@ export const signOutAction = async () => {
 
 export const contactAction = async (formData: FormData) => {
   const supabase = createClient();
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const subject = formData.get("subject") as string;
-  const message = formData.get("message") as string;
-  console.log("DATA FORM CONTACT", name, email, subject, message);
+  const nameData = formData.get("name") as string;
+  const emailData = formData.get("email") as string;
+  const subjectData = formData.get("subject") as string;
+  const messageData = formData.get("message") as string;
+  if (!nameData || !emailData || !subjectData || !messageData) {
+    return encodedRedirect(
+      "error",
+      "/contact",
+      "Todos los campos son requeridos"
+    );
+  }
+
+  const { error } = await supabase.from("contact").insert([
+    {
+      name: nameData,
+      email: emailData,
+      subject: subjectData,
+      message: messageData,
+    },
+  ]);
+
+  if (error) {
+    return encodedRedirect("error", "/contact", "No se pudo enviar el mensaje");
+  }
   encodedRedirect(
     "success",
     "/contact",
