@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { createClient } from "@/src/utils/supabase/server";
+import { Contact } from "@/types/TableDataBases";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -20,11 +21,8 @@ export default async function PageDashboard() {
     return redirect("/sign-in");
   }
 
-  const messages = [
-    { id: 1, message: "Mensaje 1" },
-    { id: 2, message: "Mensaje 2" },
-    { id: 3, message: "Mensaje 3" },
-  ];
+  const { data: messages, error }: { data: Contact[] | null; error: any } =
+    await supabase.from("contact").select("*").limit(3);
 
   return (
     <div className="h-full overflow-y-scroll">
@@ -39,15 +37,29 @@ export default async function PageDashboard() {
               Lista de mensajes
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-4">
-            <ul className="space-y-2">
-              {messages.map((message) => (
-                <li key={message.id} className="text-gray-700">
-                  {message.message}
-                </li>
-              ))}
-            </ul>
+          <CardContent className="p-3 bg-white shadow-sm rounded-lg">
+            {messages && (
+              <ul className="space-y-3">
+                {messages!.map((message) => (
+                  <li
+                    key={message.id}
+                    className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                    <p className="text-sm font-medium text-gray-900">
+                      {message.name}
+                    </p>
+                    <p className="text-sm text-gray-500">{message.subject}</p>
+                    <p className="mt-1 text-sm text-gray-700">
+                      {message.message}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {error && (
+              <p className="text-red-500">Error al cargar los mensajes</p>
+            )}
           </CardContent>
+
           <CardFooter className="p-4">
             <Link
               href="/dashboard/messages"
