@@ -74,7 +74,7 @@ const PageMessages = async () => {
                       <TableCell className="dark:text-gray-300">
                         {subject}
                       </TableCell>
-                      <TableCell className="max-w-[40ch] truncate dark:text-gray-300">
+                      <TableCell className="max-w-[40ch] dark:text-gray-300">
                         {message}
                       </TableCell>
                     </TableRow>
