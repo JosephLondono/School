@@ -69,7 +69,7 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside
         className={`
-        fixed md:static inset-y-0 left-0 z-10
+        min-w-[256px] fixed md:static inset-y-0 left-0 z-10
         w-64 md:w-64 flex flex-col items-center h-screen
         bg-green-200 dark:bg-green-800
         transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
