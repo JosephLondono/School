@@ -36,12 +36,14 @@ export function CarouselPlugin() {
                     priority={true}
                     className="opacity-90 blur-[2px]"
                   />
-                  <span className="text-4xl font-semibold z-10 text-[#0ced41] absolute block bottom-14 right-12">
-                    Visita Policia Nacional
-                  </span>
-                  <span className="text-lg font-medium z-10 text-[#0ced41]/95 absolute block bottom-10 right-12">
-                    Leer más
-                  </span>
+                  <div className="absolute bottom-4 left-4 flex flex-col">
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-semibold z-10 text-[#0ced41]">
+                      Visita Policia Nacional
+                    </span>
+                    <span className="text-xs sm:text-sm md:text-base font-medium z-10 text-[#0ced41]/95 ml-1 underline underline-offset-4">
+                      Leer más
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             </div>
