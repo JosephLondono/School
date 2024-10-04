@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 
 export const Footer = () => {
+  const classIconsMedia = "hover:text-[#3cee14] transition-all hover:scale-110";
   const LinksFast = [
     {
       title: "Contactanos",
@@ -42,22 +43,22 @@ export const Footer = () => {
     {
       title: "Facebook",
       href: "https://www.facebook.com",
-      icon: <Facebook />,
+      icon: <Facebook className={classIconsMedia} />,
     },
     {
       title: "Instagram",
       href: "https://www.instagram.com",
-      icon: <Instagram />,
+      icon: <Instagram className={classIconsMedia} />,
     },
     {
       title: "Twitter",
       href: "https://www.twitter.com",
-      icon: <Twitter />,
+      icon: <Twitter className={classIconsMedia} />,
     },
     {
       title: "Youtube",
       href: "https://www.youtube.com",
-      icon: <Youtube />,
+      icon: <Youtube className={classIconsMedia} />,
     },
   ];
   return (
