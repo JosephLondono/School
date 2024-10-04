@@ -15,3 +15,11 @@ export interface Teacher {
   phone: string;
   Academic_Degree: string;
 }
+
+export interface Event {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  featured: boolean;
+}
