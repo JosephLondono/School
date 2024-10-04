@@ -1,7 +1,9 @@
 "use client";
-import React from "react";
+import multiMonthPlugin from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import esLocale from "@fullcalendar/core/locales/es";
 import { type Event } from "@/types/TableDataBases";
 
@@ -135,12 +137,55 @@ export default function CalendarPage({ events }: { events: Event[] }) {
           background-color: #16a34a;
           color: #ffffff;
         }
+
+        /* Estilos para la vista de multiMonthYear */
+        .fc-multimonth-year .fc-daygrid-day {
+          background-color: #f0fdf4;
+          color: #15803d;
+          border: 1px solid #16a34a;
+        }
+        .fc-multimonth-year .fc-daygrid-day:hover {
+          background-color: #bbf7d0;
+          color: #065f46;
+        }
+
+        /* Estilos para modo oscuro en multiMonthYear */
+        .dark .fc-multimonth-year .fc-daygrid-day {
+          background-color: #064e3b;
+          color: #d1fae5;
+          border: 1px solid #22c55e;
+        }
+        .dark .fc-multimonth-year .fc-daygrid-day:hover {
+          background-color: #22c55e;
+          color: #ffffff;
+        }
+
+        .dark .fc-multimonth-title {
+          background-color: #16a34a;
+        }
+        .dark .fc-theme-standard td {
+          border: 1px solid gray;
+          background-color: rgb(229 231 235);
+        }
+        .dark .fc-daygrid-day-number {
+          color: black;
+        }
       `}</style>
 
       <FullCalendar
         locale={esLocale}
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
+        plugins={[
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin,
+          multiMonthPlugin,
+        ]}
+        headerToolbar={{
+          left: "dayGridMonth,multiMonthYear",
+          center: "title",
+          right: "prev,next today",
+        }}
+        initialView="multiMonthYear"
         weekends={false}
         events={events.map((event) => ({ ...event, id: event.id.toString() }))}
         eventContent={renderEventContent}
