@@ -23,8 +23,6 @@ const Calendar = async () => {
 
   let { data: events, error } = await supabase.from("events").select("*");
   events = events ?? [];
-  console.log(events);
-  console.log(error);
 
   return (
     <LayoutPrincipal>
