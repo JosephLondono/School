@@ -12,7 +12,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { FaCog } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import { IoIosCalendar } from "react-icons/io";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 import { Separator } from "@/src/components/ui/separator";
 import { usePathname } from "next/navigation";
@@ -27,8 +27,8 @@ export default function DashboardLayout({
   const sizeIcon = 20;
   const menuItems = [
     {
-      label: "Inicio",
-      icon: <IoHomeOutline size={sizeIcon} />,
+      label: "Dashboard",
+      icon: <MdOutlineSpaceDashboard size={sizeIcon} />,
       href: "/dashboard",
     },
     {
@@ -46,11 +46,6 @@ export default function DashboardLayout({
       icon: <PiStar size={sizeIcon} />,
       href: "/dashboard/grades",
     },
-    // {
-    //   label: "Asistencias",
-    //   icon: <IoIosCalendar size={sizeIcon} />,
-    //   href: "/dashboard/attendances",
-    // },
     {
       label: "Mensajes",
       icon: <FaRegMessage size={sizeIcon} />,
@@ -103,10 +98,10 @@ export default function DashboardLayout({
             {menuItems.map(({ label, href, icon }) => (
               <li
                 key={label}
-                className={`w-full py-3 px-4 text-lg ${
+                className={`w-full py-3 px-4 text-lg transition-colors duration-300 ease-in-out ${
                   pathName === href
                     ? "bg-green-500 dark:bg-green-700 text-white"
-                    : "bg-green-300 dark:bg-green-600 text-green-900 dark:text-green-100"
+                    : "bg-green-300 dark:bg-green-600 text-green-900 dark:text-green-100 hover:bg-green-400 hover:dark:bg-green-700 hover:text-white"
                 }`}>
                 <Link
                   href={href}
@@ -119,16 +114,23 @@ export default function DashboardLayout({
             ))}
           </ul>
         </nav>
-        <div className="mt-auto mb-4 w-full">
+
+        <footer className="mt-auto mb-4 w-full">
           <Separator className="bg-green-700 dark:bg-green-300 w-[50%] mb-2 mx-auto" />
           <div className="w-full flex justify-center items-center gap-4">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-green-900 dark:text-green-100 hover:text-green-700 hover:dark:text-green-300 transition-colors duration-300 ease-in-out">
+              <IoHomeOutline size={sizeIcon} title="Ir a la pagina principal" />
+            </Link>
             <ThemeSwitcher />
             <FaCog
               size={sizeIcon}
-              className="text-green-900 dark:text-green-100"
+              className="text-green-900 dark:text-green-100 hover:text-green-700 hover:dark:text-green-300 transition-colors duration-300 ease-in-out"
+              title="Configuración"
             />
           </div>
-        </div>
+        </footer>
       </aside>
 
       {/* Botón de menú para móviles (fuera del sidebar) */}
