@@ -48,8 +48,14 @@ export default async function AuthButton() {
       <Separator orientation="horizontal" className="sm:hidden" />
       <Separator orientation="vertical" className="h-[20px] hidden" />
       <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
+      <Link
+        href="/dashboard"
+        className="hover:underline hover:underline-offset-4">
+        Dashboard
+      </Link>
+      <Separator orientation="vertical" className="h-[20px] hidden sm:block" />
       <form action={signOutAction}>
-        <Button type="submit" variant="ghost" className="p-0 h-fit">
+        <Button type="submit" variant="outline" className="py-1 px-2 h-fit">
           Salir
         </Button>
       </form>

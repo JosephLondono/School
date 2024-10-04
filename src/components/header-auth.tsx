@@ -52,8 +52,17 @@ export default async function AuthButton() {
           <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <form action={signOutAction}>
-              <Button type="submit" variant="ghost" className="p-0 h-fit">
+            <Link href="/dashboard" className="block w-full">
+              Dashboard
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="p-0">
+            <form action={signOutAction} className="w-full">
+              <Button
+                type="submit"
+                variant="ghost"
+                className="w-full text-left py-1 px-2 h-fit block">
                 Salir
               </Button>
             </form>
@@ -72,10 +81,14 @@ export default async function AuthButton() {
           <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Link href="/sign-in">Loguearse</Link>
+            <Link href="/sign-in" className="block w-full">
+              Loguearse
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/sign-up">Registrarse</Link>
+            <Link href="/sign-up" className="block w-full">
+              Registrarse
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
