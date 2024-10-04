@@ -38,7 +38,7 @@ export function CarouselPlugin({ events }: { events: Event[] }) {
                   priority={true}
                   className="opacity-90 "
                 />
-                <div className="absolute bottom-4 left-4 flex flex-col bg-black/50 p-4 rounded-md">
+                <div className="absolute bottom-4 left-4 flex flex-col bg-black/50 p-4 rounded-md max-w-[90%]">
                   <span className="text-2xl sm:text-3xl md:text-4xl font-semibold z-10 text-white">
                     Bienvenido a colegio Los Alpes
                   </span>
@@ -67,7 +67,7 @@ export function CarouselPlugin({ events }: { events: Event[] }) {
                     priority={true}
                     className="opacity-90 blur-[2px]"
                   />
-                  <div className="absolute bottom-4 left-4 flex flex-col bg-black/50 p-4 rounded-md">
+                  <div className="absolute bottom-4 left-4 flex flex-col bg-black/50 p-4 rounded-md  max-w-[90%]">
                     <span className="text-2xl sm:text-3xl md:text-4xl font-semibold z-10 text-[#0ced41]">
                       {title}
                     </span>
