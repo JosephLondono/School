@@ -3,6 +3,8 @@ import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import esLocale from "@fullcalendar/core/locales/es";
+import { type Event } from "@/types/TableDataBases";
+
 import {
   Tooltip,
   TooltipTrigger,
@@ -10,41 +12,7 @@ import {
 } from "@/src/components/ui/tooltip";
 import { Maximize2 } from "lucide-react";
 
-interface Event {
-  title: string;
-  date: string;
-  description: string;
-}
-
-export default function CalendarPage() {
-  const events: Event[] = [
-    {
-      title: "Futbol 5",
-      date: "2024-10-01",
-      description: "Torneo Futbol 5 en el coliseo de la institucion",
-    },
-    {
-      title: "Dia de la independencia",
-      date: "2024-10-01",
-      description: "Celebracion del dia de la independencia",
-    },
-    {
-      title: "Dia de la raza",
-      date: "2024-10-01",
-      description: "Celebracion del dia de la raza",
-    },
-    {
-      title: "Dia de la madre",
-      date: "2024-10-01",
-      description: "Celebracion del dia de la madre",
-    },
-    {
-      title: "Dia del maestro",
-      date: "2024-10-01",
-      description: "Celebracion del dia del maestro",
-    },
-  ];
-
+export default function CalendarPage({ events }: { events: Event[] }) {
   const renderEventContent = (eventInfo: any) => {
     return (
       <Tooltip>
@@ -158,7 +126,7 @@ export default function CalendarPage() {
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         weekends={false}
-        events={events}
+        events={events.map((event) => ({ ...event, id: event.id.toString() }))}
         eventContent={renderEventContent}
         eventDisplay="block"
         eventBackgroundColor="#16a34a"

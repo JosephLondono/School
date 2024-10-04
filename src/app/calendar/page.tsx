@@ -1,5 +1,6 @@
 import LayoutPrincipal from "@/src/components/home/Layout";
 import CalendarSection from "@/src/components/home/Calendar/Calendar";
+import { createClient } from "@/src/utils/supabase/server";
 import { Jost } from "next/font/google";
 
 const JostFont = Jost({
@@ -17,7 +18,14 @@ export const metadata = {
   description: "Pagina de calendario del colegio los alpes",
 };
 
-const Calendar = () => {
+const Calendar = async () => {
+  const supabase = createClient();
+
+  let { data: events, error } = await supabase.from("events").select("*");
+  events = events ?? [];
+  console.log(events);
+  console.log(error);
+
   return (
     <LayoutPrincipal>
       <section
@@ -29,7 +37,7 @@ const Calendar = () => {
           vacaciones, eventos y actividades especiales. Mantente informado y
           planifica tu tiempo de la mejor manera.
         </p>
-        <CalendarSection />
+        <CalendarSection events={events} />
       </section>
     </LayoutPrincipal>
   );
