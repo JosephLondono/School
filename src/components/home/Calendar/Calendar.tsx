@@ -59,6 +59,13 @@ export default function CalendarPage({ events }: { events: Event[] }) {
           border-radius: 4px;
           background-color: #dcfce7;
           color: #166534;
+          transition:
+            background-color 0.3s,
+            color 0.3s;
+        }
+        .event-item:hover {
+          background-color: #16a34a;
+          color: #ffffff;
         }
         .event-bullet {
           margin-right: 4px;
@@ -111,6 +118,10 @@ export default function CalendarPage({ events }: { events: Event[] }) {
           background-color: #065f46;
           color: #d1fae5;
         }
+        .dark .event-item:hover {
+          background-color: #16a34a;
+          color: #ffffff;
+        }
         .dark .event-bullet {
           color: #34d399;
         }
@@ -120,7 +131,12 @@ export default function CalendarPage({ events }: { events: Event[] }) {
         .dark .fc-more-link {
           color: rgb(209, 250, 229);
         }
+        .dark .fc-more-link:hover {
+          background-color: #16a34a;
+          color: #ffffff;
+        }
       `}</style>
+
       <FullCalendar
         locale={esLocale}
         plugins={[dayGridPlugin]}
