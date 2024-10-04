@@ -40,7 +40,7 @@ export default async function PageDashboard() {
 
   return (
     <div className="h-full overflow-y-scroll dark:bg-gray-900 rounded-xl">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 dark:text-green-400 px-5 pt-5">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 dark:text-green-400 px-5 pt-5 text-center md:text-start">
         Hola, Dashboard
       </h2>
       <section className="grid-dashboard gap-6 px-3 mb-4">
