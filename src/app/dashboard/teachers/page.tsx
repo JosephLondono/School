@@ -34,7 +34,6 @@ const PageTeacher = async () => {
 
   const { data: teachers, error }: { data: Teacher[] | null; error: any } =
     await supabase.from("teachers").select("*");
-  console.log(teachers);
 
   return (
     <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
