@@ -17,6 +17,7 @@ import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { Separator } from "@/src/components/ui/separator";
 import { usePathname } from "next/navigation";
 import { ThemeSwitcher } from "@/src/components/theme-switcher";
+import { CalendarDays } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -50,6 +51,11 @@ export default function DashboardLayout({
       label: "Mensajes",
       icon: <FaRegMessage size={sizeIcon} />,
       href: "/dashboard/messages",
+    },
+    {
+      label: "Eventos",
+      icon: <CalendarDays size={sizeIcon} />,
+      href: "/dashboard/events",
     },
   ];
   const pathName = usePathname();

@@ -1,5 +1,6 @@
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@pheralb/toast";
 import "./globals.css";
 
 export default function RootLayout({
@@ -20,6 +21,7 @@ export default function RootLayout({
           disableTransitionOnChange>
           {children}
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

@@ -183,3 +183,110 @@ export const contactAction = async (formData: FormData) => {
     "Mensaje enviado correctamente, nos pondremos en contacto contigo"
   );
 };
+
+export const eventContactEdit = async (formData: FormData) => {
+  const supabase = createClient();
+  const idEvent = formData.get("id") as string;
+  const titleEvent = formData.get("title") as string;
+  const descriptionEvent = formData.get("description") as string;
+  const dateEvent = formData.get("date") as string;
+  const featured = formData.get("featured") as string;
+
+  const featuredEvent = featured === "on" ? true : false;
+
+  const { error } = await supabase
+    .from("events")
+    .update({
+      id: idEvent,
+      title: titleEvent,
+      description: descriptionEvent,
+      date: dateEvent,
+      featured: featuredEvent,
+    })
+    .eq("id", idEvent);
+
+  if (error) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/events",
+      "No se pudo editar el evento"
+    );
+  }
+  encodedRedirect(
+    "success",
+    "/dashboard/events",
+    "Evento editado correctamente"
+  );
+};
+
+export const eventContactDelete = async (formData: FormData) => {
+  const supabase = createClient();
+  const idEvent = formData.get("id") as string;
+
+  if (!idEvent)
+    return encodedRedirect(
+      "error",
+      "/dashboard/events",
+      "No se pudo eliminar el evento"
+    );
+
+  const { error } = await supabase.from("events").delete().eq("id", idEvent);
+
+  if (error) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/events",
+      "No se pudo eliminar el evento"
+    );
+  }
+  encodedRedirect(
+    "success",
+    "/dashboard/events",
+    "Evento Eliminado correctamente"
+  );
+};
+
+export const eventContactCreate = async (formData: FormData) => {
+  const supabase = createClient();
+  const titleEvent = formData.get("title") as string;
+  const descriptionEvent = formData.get("description") as string;
+  const dateEvent =
+    (formData.get("date") as string) || new Date().toISOString();
+  const formattedDate = dateEvent.split("T")[0];
+
+  const featured = formData.get("featured") as string;
+
+  const featuredEvent = featured === "on" ? true : false;
+
+  console.log(titleEvent, descriptionEvent, dateEvent, featuredEvent);
+
+  if (!titleEvent || !descriptionEvent || !dateEvent) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/events",
+      "Todos los campos son requeridos"
+    );
+  }
+
+  const { error } = await supabase.from("events").insert([
+    {
+      title: titleEvent,
+      description: descriptionEvent,
+      date: formattedDate,
+      featured: featuredEvent,
+    },
+  ]);
+
+  if (error) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/events",
+      "No se pudo crear el evento"
+    );
+  }
+  encodedRedirect(
+    "success",
+    "/dashboard/events",
+    "Evento creado correctamente"
+  );
+};
