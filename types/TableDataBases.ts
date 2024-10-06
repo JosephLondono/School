@@ -13,7 +13,7 @@ export interface Teacher {
   id_document: number;
   email: string;
   phone: string;
-  Academic_Degree: string;
+  academic_degree: string;
 }
 
 export interface Event {

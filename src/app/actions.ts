@@ -290,3 +290,128 @@ export const eventContactCreate = async (formData: FormData) => {
     "Evento creado correctamente"
   );
 };
+
+export const teacherCreate = async (formData: FormData) => {
+  const supabase = createClient();
+  const name = formData.get("name") as string;
+  const num_document = formData.get("id_document") as string;
+  const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
+  const academic_degree = formData.get("academic_degree") as string;
+
+  console.log(name, num_document, email, phone, academic_degree);
+
+  if (!name || !num_document || !email || !phone || !academic_degree) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/teachers",
+      "Todos los campos son requeridos"
+    );
+  }
+
+  const { error } = await supabase.from("teachers").insert([
+    {
+      name: name,
+      id_document: num_document,
+      email: email,
+      phone: phone,
+      academic_degree: academic_degree,
+    },
+  ]);
+
+  if (error) {
+    if (error.code === "23505") {
+      return encodedRedirect(
+        "error",
+        "/dashboard/teachers",
+        "El profesor con ese documento ya existe"
+      );
+    }
+    return encodedRedirect(
+      "error",
+      "/dashboard/teachers",
+      "No se pudo crear el profesor"
+    );
+  }
+
+  return encodedRedirect(
+    "success",
+    "/dashboard/teachers",
+    "Profesor creado correctamente"
+  );
+};
+
+export const teacherUpdate = async (formData: FormData) => {
+  const supabase = createClient();
+  const idTeacher = formData.get("id") as string;
+  const name = formData.get("name") as string;
+  const num_document = formData.get("id_document") as string;
+  const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
+  const academic_degree = formData.get("academic_degree") as string;
+
+  console.log(name, num_document, email, phone, academic_degree);
+
+  if (!name || !num_document || !email || !phone || !academic_degree) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/teachers",
+      "Todos los campos son requeridos"
+    );
+  }
+
+  const { error } = await supabase
+    .from("teachers")
+    .update({
+      name: name,
+      id_document: num_document,
+      email: email,
+      phone: phone,
+      academic_degree: academic_degree,
+    })
+    .eq("id", idTeacher);
+
+  if (error) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/teachers",
+      "No se pudo editar el profesor"
+    );
+  }
+
+  return encodedRedirect(
+    "success",
+    "/dashboard/teachers",
+    "Profesor editado correctamente"
+  );
+};
+
+export const teacherDelete = async (formData: FormData) => {
+  const supabase = createClient();
+  const idTeacher = formData.get("id") as string;
+
+  if (!idTeacher)
+    return encodedRedirect(
+      "error",
+      "/dashboard/teachers",
+      "No se pudo eliminar el profesor"
+    );
+
+  const { error } = await supabase
+    .from("teachers")
+    .delete()
+    .eq("id", idTeacher);
+
+  if (error) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/teachers",
+      "No se pudo eliminar el profesor"
+    );
+  }
+  encodedRedirect(
+    "success",
+    "/dashboard/teachers",
+    "Profesor Eliminado correctamente"
+  );
+};
