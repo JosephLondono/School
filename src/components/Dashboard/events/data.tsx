@@ -83,7 +83,7 @@ const DataEvents = ({
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-      <div className="flex my-2 gap-3">
+      <div className="flex my-2 gap-3 px-3">
         <input
           type="text"
           placeholder="Filtrar por titulo, descripcion o fecha..."
