@@ -22,4 +22,5 @@ export interface Event {
   description: string;
   date: string;
   featured: boolean;
+  url_image?: string;
 }
