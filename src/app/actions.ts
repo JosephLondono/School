@@ -239,7 +239,6 @@ export const eventUpdate = async (formData: FormData) => {
     try {
       imageUrl = await uploadToCloudinary; // Espera a que la imagen sea subida y obtén la URL
     } catch (error) {
-      console.log(error);
       return encodedRedirect(
         "error",
         "/dashboard/events",
@@ -366,8 +365,6 @@ export const eventCreate = async (formData: FormData) => {
     try {
       imageUrl = await uploadToCloudinary; // Espera a que la imagen sea subida y obtén la URL
     } catch (error) {
-      console.log(error);
-
       return encodedRedirect(
         "error",
         "/dashboard/events",
