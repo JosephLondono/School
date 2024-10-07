@@ -212,7 +212,29 @@ export const eventUpdate = async (formData: FormData) => {
     );
   }
 
-  if (image.size > 0) {
+  if (image && image.size > 0) {
+    const validImageTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+      "image/bmp",
+      "image/svg+xml",
+      "image/tiff",
+      "image/x-icon",
+      "image/heic",
+      "image/heif",
+      "image/avif",
+    ];
+
+    if (!validImageTypes.includes(image.type)) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "El archivo debe ser una imagen válida"
+      );
+    }
+
     // Convertir el archivo de imagen en un array buffer
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
@@ -245,10 +267,11 @@ export const eventUpdate = async (formData: FormData) => {
         "Error al guardar la imagen"
       );
     }
+
+    // Actualizar el evento con la nueva imagen
     const { error: updateError } = await supabase
       .from("events")
       .update({
-        id: idEvent,
         title: titleEvent,
         description: descriptionEvent,
         date: dateEvent,
@@ -256,6 +279,7 @@ export const eventUpdate = async (formData: FormData) => {
         url_image: imageUrl,
       })
       .eq("id", idEvent);
+
     if (updateError) {
       return encodedRedirect(
         "error",
@@ -264,10 +288,10 @@ export const eventUpdate = async (formData: FormData) => {
       );
     }
   } else {
+    // Actualizar el evento sin cambiar la imagen
     const { error: updateError } = await supabase
       .from("events")
       .update({
-        id: idEvent,
         title: titleEvent,
         description: descriptionEvent,
         date: dateEvent,
@@ -283,6 +307,7 @@ export const eventUpdate = async (formData: FormData) => {
       );
     }
   }
+
   encodedRedirect(
     "success",
     "/dashboard/events",
@@ -338,7 +363,30 @@ export const eventCreate = async (formData: FormData) => {
     );
   }
 
-  if (image.size > 0) {
+  if (image && image.size > 0) {
+    // Verificar que el archivo sea una imagen
+    const validImageTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+      "image/bmp",
+      "image/svg+xml",
+      "image/tiff",
+      "image/x-icon",
+      "image/heic",
+      "image/heif",
+      "image/avif",
+    ];
+
+    if (!validImageTypes.includes(image.type)) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "El archivo debe ser una imagen válida"
+      );
+    }
+
     // Convertir el archivo de imagen en un array buffer
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
@@ -371,6 +419,8 @@ export const eventCreate = async (formData: FormData) => {
         "Error al guardar la imagen"
       );
     }
+
+    // Insertar el evento con la imagen
     const { error: updateError } = await supabase.from("events").insert({
       title: titleEvent,
       description: descriptionEvent,
@@ -386,6 +436,7 @@ export const eventCreate = async (formData: FormData) => {
       );
     }
   } else {
+    // Insertar el evento sin imagen
     const { error: updateError } = await supabase.from("events").insert({
       title: titleEvent,
       description: descriptionEvent,
@@ -401,6 +452,8 @@ export const eventCreate = async (formData: FormData) => {
       );
     }
   }
+
+  // Redirigir con éxito
   encodedRedirect(
     "success",
     "/dashboard/events",
