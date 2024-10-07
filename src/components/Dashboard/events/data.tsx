@@ -368,7 +368,28 @@ const DataEvents = ({
                                     name="image"
                                     accept="image/*"
                                     className="w-full px-4 p-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                    onChange={(e) => {
+                                      const file = e.target.files
+                                        ? e.target.files[0]
+                                        : null;
+                                      setImagePreview(file);
+                                    }}
                                   />
+                                  {imagePreview && (
+                                    <>
+                                      <span>
+                                        Vista previa de la imagen:{" "}
+                                        {imagePreview.name}
+                                      </span>
+                                      <Image
+                                        src={URL.createObjectURL(imagePreview)}
+                                        alt="Imagen previa"
+                                        width={500}
+                                        height={100}
+                                        className="object-cover mt-2"
+                                      />
+                                    </>
+                                  )}
                                 </div>
                                 <button
                                   type="submit"
