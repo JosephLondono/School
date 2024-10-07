@@ -5,6 +5,16 @@ import { createClient } from "@/src/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { v2 as cloudinary } from "cloudinary";
+import path from "path";
+import { writeFile } from "fs";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -255,10 +265,42 @@ export const eventContactCreate = async (formData: FormData) => {
   const formattedDate = dateEvent.split("T")[0];
 
   const featured = formData.get("featured") as string;
-
   const featuredEvent = featured === "on" ? true : false;
 
-  console.log(titleEvent, descriptionEvent, dateEvent, featuredEvent);
+  const image = formData.get("image") as File;
+
+  // Convertir el archivo de imagen en un array buffer
+  const bytes = await image.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  // Promesa para manejar la subida de la imagen a Cloudinary
+  const uploadToCloudinary = new Promise<string>((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: "JL-School",
+        use_filename: true,
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result!.secure_url); // Asegúrate de que result no sea null
+        }
+      }
+    );
+    uploadStream.end(buffer); // Finalizar la subida con el buffer de la imagen
+  });
+
+  let imageUrl: string;
+  try {
+    imageUrl = await uploadToCloudinary; // Espera a que la imagen sea subida y obtén la URL
+  } catch (error) {
+    return encodedRedirect(
+      "error",
+      "/dashboard/events",
+      "Error al subir la imagen a Cloudinary"
+    );
+  }
 
   if (!titleEvent || !descriptionEvent || !dateEvent) {
     return encodedRedirect(
@@ -268,12 +310,14 @@ export const eventContactCreate = async (formData: FormData) => {
     );
   }
 
+  // Insertar el evento en la base de datos
   const { error } = await supabase.from("events").insert([
     {
       title: titleEvent,
       description: descriptionEvent,
       date: formattedDate,
       featured: featuredEvent,
+      url_image: imageUrl, // Usa la URL de la imagen subida a Cloudinary
     },
   ]);
 
@@ -284,6 +328,7 @@ export const eventContactCreate = async (formData: FormData) => {
       "No se pudo crear el evento"
     );
   }
+
   encodedRedirect(
     "success",
     "/dashboard/events",
@@ -298,8 +343,6 @@ export const teacherCreate = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const phone = formData.get("phone") as string;
   const academic_degree = formData.get("academic_degree") as string;
-
-  console.log(name, num_document, email, phone, academic_degree);
 
   if (!name || !num_document || !email || !phone || !academic_degree) {
     return encodedRedirect(
@@ -349,8 +392,6 @@ export const teacherUpdate = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const phone = formData.get("phone") as string;
   const academic_degree = formData.get("academic_degree") as string;
-
-  console.log(name, num_document, email, phone, academic_degree);
 
   if (!name || !num_document || !email || !phone || !academic_degree) {
     return encodedRedirect(

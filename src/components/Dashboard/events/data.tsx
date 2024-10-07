@@ -35,6 +35,9 @@ import { FormMessage, Message } from "@/src/components/form-message";
 import { Button } from "../../ui/button";
 
 import { toast } from "@pheralb/toast";
+import { Input } from "../../ui/input";
+import { set } from "react-hook-form";
+import Image from "next/image";
 
 const DataEvents = ({
   searchParams,
@@ -50,6 +53,7 @@ const DataEvents = ({
 
   const [filterText, setFilterText] = useState("");
   const [submiting, setSubmiting] = useState(false);
+  const [imagePreview, setImagePreview] = useState<File | null>(null);
 
   const filteredEvents = useMemo(() => {
     if (!events) return [];
@@ -78,6 +82,7 @@ const DataEvents = ({
   }, [searchParams]);
 
   const handleDialogOpen = () => {
+    setImagePreview(null);
     router.push("/dashboard/events");
   };
 
@@ -96,7 +101,7 @@ const DataEvents = ({
             Agregar evento
             <CirclePlus size={17} />
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="w-full max-h-[90vh] overflow-y-auto py-8 px-6">
             <DialogHeader>
               <DialogTitle>Agregar evento</DialogTitle>
               <DialogDescription>
@@ -105,8 +110,7 @@ const DataEvents = ({
                 <form
                   className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm"
                   action={eventContactCreate}
-                  ref={formRef} // referencia del formulario
-                >
+                  ref={formRef}>
                   <div>
                     <Label
                       htmlFor="title"
@@ -164,6 +168,38 @@ const DataEvents = ({
                       Importante
                     </Label>
                   </div>
+                  <div>
+                    <Label
+                      htmlFor="file"
+                      className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Imagen
+                    </Label>
+                    <Input
+                      type="file"
+                      id="image"
+                      name="image"
+                      accept="image/*"
+                      className="w-full px-4 p-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                      onChange={(e) => {
+                        const file = e.target.files ? e.target.files[0] : null;
+                        setImagePreview(file);
+                      }}
+                    />
+                    {imagePreview && (
+                      <>
+                        <span>
+                          Vista previa de la imagen: {imagePreview.name}
+                        </span>
+                        <Image
+                          src={URL.createObjectURL(imagePreview)}
+                          alt="Imagen previa"
+                          width={500}
+                          height={100}
+                          className="object-cover mt-2"
+                        />
+                      </>
+                    )}
+                  </div>
                   <button
                     type="submit"
                     className="w-full bg-green-500 text-white p-2 rounded-md mt-3 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
@@ -193,6 +229,9 @@ const DataEvents = ({
               <TableHead className="bg-gray-100 dark:bg-gray-700 dark:text-green-300">
                 Descripción
               </TableHead>
+              <TableHead className="bg-gray-100 dark:bg-gray-700 dark:text-green-300 text-center">
+                Imagen
+              </TableHead>
               <TableHead className="bg-gray-100 dark:bg-gray-700 dark:text-green-300">
                 Fecha
               </TableHead>
@@ -206,7 +245,7 @@ const DataEvents = ({
           </TableHeader>
           <TableBody>
             {filteredEvents.map(
-              ({ id, title, date, description, featured }) => (
+              ({ id, title, date, description, featured, url_image }) => (
                 <TableRow
                   key={id}
                   className="hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -215,6 +254,21 @@ const DataEvents = ({
                   </TableCell>
                   <TableCell className="text-blue-600 dark:text-green-400 max-w-[30ch]">
                     {description}
+                  </TableCell>
+                  <TableCell className="text-blue-600 dark:text-green-400 max-w-[30ch]">
+                    <div className="flex justify-center">
+                      {url_image ? (
+                        <Image
+                          src={url_image}
+                          alt={title}
+                          width={50}
+                          height={50}
+                          className="object-cover rounded-lg"
+                        />
+                      ) : (
+                        "Sin imagen"
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell className="dark:text-gray-300 w-[14ch]">
                     {date}
@@ -304,6 +358,19 @@ const DataEvents = ({
                                     className="text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Importante
                                   </Label>
+                                </div>
+                                <div>
+                                  <Label
+                                    htmlFor="file"
+                                    className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Imagen
+                                  </Label>
+                                  <Input
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    className="w-full px-4 p-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                                  />
                                 </div>
                                 <button
                                   type="submit"
