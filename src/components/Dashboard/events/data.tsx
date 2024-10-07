@@ -366,6 +366,7 @@ const DataEvents = ({
                                     type="file"
                                     id="image"
                                     name="image"
+                                    accept="image/*"
                                     className="w-full px-4 p-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
                                   />
                                 </div>
