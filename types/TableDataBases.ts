@@ -24,3 +24,16 @@ export interface Event {
   featured: boolean;
   url_image?: string;
 }
+
+export interface Course {
+  id: number;
+  name: string;
+  degree_id: {
+    id: number;
+    name: string;
+  };
+  teacher_id: {
+    id: number;
+    name: string;
+  };
+}
