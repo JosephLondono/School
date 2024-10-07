@@ -6,8 +6,6 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { v2 as cloudinary } from "cloudinary";
-import path from "path";
-import { writeFile } from "fs";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -194,7 +192,7 @@ export const contactAction = async (formData: FormData) => {
   );
 };
 
-export const eventContactEdit = async (formData: FormData) => {
+export const eventUpdate = async (formData: FormData) => {
   const supabase = createClient();
   const idEvent = formData.get("id") as string;
   const titleEvent = formData.get("title") as string;
@@ -204,23 +202,86 @@ export const eventContactEdit = async (formData: FormData) => {
 
   const featuredEvent = featured === "on" ? true : false;
 
-  const { error } = await supabase
-    .from("events")
-    .update({
-      id: idEvent,
-      title: titleEvent,
-      description: descriptionEvent,
-      date: dateEvent,
-      featured: featuredEvent,
-    })
-    .eq("id", idEvent);
+  const image = formData.get("image") as File;
 
-  if (error) {
+  if (!idEvent || !titleEvent || !descriptionEvent || !dateEvent) {
     return encodedRedirect(
       "error",
       "/dashboard/events",
-      "No se pudo editar el evento"
+      "Todos los campos son requeridos"
     );
+  }
+
+  if (image.size > 0) {
+    // Convertir el archivo de imagen en un array buffer
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Promesa para manejar la subida de la imagen a Cloudinary
+    const uploadToCloudinary = new Promise<string>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: "JL-School",
+          use_filename: true,
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result!.secure_url); // Asegúrate de que result no sea null
+          }
+        }
+      );
+      uploadStream.end(buffer); // Finalizar la subida con el buffer de la imagen
+    });
+
+    let imageUrl: string;
+    try {
+      imageUrl = await uploadToCloudinary; // Espera a que la imagen sea subida y obtén la URL
+    } catch (error) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "Error al guardar la imagen"
+      );
+    }
+    const { error: updateError } = await supabase
+      .from("events")
+      .update({
+        id: idEvent,
+        title: titleEvent,
+        description: descriptionEvent,
+        date: dateEvent,
+        featured: featuredEvent,
+        url_image: imageUrl,
+      })
+      .eq("id", idEvent);
+    if (updateError) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "No se pudo editar el evento"
+      );
+    }
+  } else {
+    const { error: updateError } = await supabase
+      .from("events")
+      .update({
+        id: idEvent,
+        title: titleEvent,
+        description: descriptionEvent,
+        date: dateEvent,
+        featured: featuredEvent,
+      })
+      .eq("id", idEvent);
+
+    if (updateError) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "No se pudo editar el evento"
+      );
+    }
   }
   encodedRedirect(
     "success",
@@ -229,7 +290,7 @@ export const eventContactEdit = async (formData: FormData) => {
   );
 };
 
-export const eventContactDelete = async (formData: FormData) => {
+export const eventDelete = async (formData: FormData) => {
   const supabase = createClient();
   const idEvent = formData.get("id") as string;
 
@@ -256,7 +317,7 @@ export const eventContactDelete = async (formData: FormData) => {
   );
 };
 
-export const eventContactCreate = async (formData: FormData) => {
+export const eventCreate = async (formData: FormData) => {
   const supabase = createClient();
   const titleEvent = formData.get("title") as string;
   const descriptionEvent = formData.get("description") as string;
@@ -269,39 +330,6 @@ export const eventContactCreate = async (formData: FormData) => {
 
   const image = formData.get("image") as File;
 
-  // Convertir el archivo de imagen en un array buffer
-  const bytes = await image.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-
-  // Promesa para manejar la subida de la imagen a Cloudinary
-  const uploadToCloudinary = new Promise<string>((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      {
-        folder: "JL-School",
-        use_filename: true,
-      },
-      (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result!.secure_url); // Asegúrate de que result no sea null
-        }
-      }
-    );
-    uploadStream.end(buffer); // Finalizar la subida con el buffer de la imagen
-  });
-
-  let imageUrl: string;
-  try {
-    imageUrl = await uploadToCloudinary; // Espera a que la imagen sea subida y obtén la URL
-  } catch (error) {
-    return encodedRedirect(
-      "error",
-      "/dashboard/events",
-      "Error al subir la imagen a Cloudinary"
-    );
-  }
-
   if (!titleEvent || !descriptionEvent || !dateEvent) {
     return encodedRedirect(
       "error",
@@ -310,25 +338,71 @@ export const eventContactCreate = async (formData: FormData) => {
     );
   }
 
-  // Insertar el evento en la base de datos
-  const { error } = await supabase.from("events").insert([
-    {
+  console.log(dateEvent);
+
+  if (image.size > 0) {
+    // Convertir el archivo de imagen en un array buffer
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Promesa para manejar la subida de la imagen a Cloudinary
+    const uploadToCloudinary = new Promise<string>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: "JL-School",
+          use_filename: true,
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result!.secure_url); // Asegúrate de que result no sea null
+          }
+        }
+      );
+      uploadStream.end(buffer); // Finalizar la subida con el buffer de la imagen
+    });
+
+    let imageUrl: string;
+    try {
+      imageUrl = await uploadToCloudinary; // Espera a que la imagen sea subida y obtén la URL
+    } catch (error) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "Error al guardar la imagen"
+      );
+    }
+    const { error: updateError } = await supabase.from("events").insert({
       title: titleEvent,
       description: descriptionEvent,
       date: formattedDate,
       featured: featuredEvent,
-      url_image: imageUrl, // Usa la URL de la imagen subida a Cloudinary
-    },
-  ]);
+      url_image: imageUrl,
+    });
+    if (updateError) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "No se pudo crear el evento"
+      );
+    }
+  } else {
+    const { error: updateError } = await supabase.from("events").insert({
+      title: titleEvent,
+      description: descriptionEvent,
+      date: formattedDate,
+      featured: featuredEvent,
+    });
 
-  if (error) {
-    return encodedRedirect(
-      "error",
-      "/dashboard/events",
-      "No se pudo crear el evento"
-    );
+    if (updateError) {
+      return encodedRedirect(
+        "error",
+        "/dashboard/events",
+        "No se pudo crear el evento"
+      );
+    }
   }
-
   encodedRedirect(
     "success",
     "/dashboard/events",

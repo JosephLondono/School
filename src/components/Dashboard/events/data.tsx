@@ -2,11 +2,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Badge } from "@/src/components/ui/badge";
 import { type Event } from "@/types/TableDataBases";
-import {
-  eventContactEdit,
-  eventContactDelete,
-  eventContactCreate,
-} from "@/src/app/actions";
+import { eventUpdate, eventDelete, eventCreate } from "@/src/app/actions";
 import { useRouter } from "next/navigation";
 
 import {
@@ -109,7 +105,7 @@ const DataEvents = ({
                 <Separator className="dark:bg-green-300 bg-green-700 w-[75%] my-3 mx-auto" />
                 <form
                   className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm"
-                  action={eventContactCreate}
+                  action={eventCreate}
                   ref={formRef}>
                   <div>
                     <Label
@@ -151,6 +147,7 @@ const DataEvents = ({
                         type="date"
                         id="date"
                         name="date"
+                        defaultValue={new Date().toISOString().split("T")[0]}
                         className="w-full px-4 p-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
                       />
                     </div>
@@ -288,7 +285,7 @@ const DataEvents = ({
                         <DialogTrigger>
                           <Pencil size={15} />
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="w-full max-h-[90vh] overflow-y-auto py-8 px-6">
                           <DialogHeader>
                             <DialogTitle>Editar evento</DialogTitle>
                             <DialogDescription>
@@ -296,7 +293,7 @@ const DataEvents = ({
                               <Separator className="dark:bg-green-300 bg-green-700 w-[75%] my-3 mx-auto" />
                               <form
                                 className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm"
-                                action={eventContactEdit}>
+                                action={eventUpdate}>
                                 <input hidden name="id" value={id} readOnly />
                                 <div>
                                   <Label
@@ -406,7 +403,7 @@ const DataEvents = ({
                                     Cancelar
                                   </Button>
                                 </DialogClose>
-                                <form action={eventContactDelete}>
+                                <form action={eventDelete}>
                                   <input hidden name="id" value={id} readOnly />
                                   <Button
                                     size="sm"
