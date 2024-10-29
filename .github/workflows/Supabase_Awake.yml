@@ -1,8 +1,8 @@
-name: Keep Supabase Database Awake
+name: Supabase Awake
 
 on:
   schedule:
-    # Ejecuta la tarea cada semana, el lunes a las 00:00
+    # Ejecuta la tarea cada 3 minutos
     - cron: "*/3 * * * *"
 
 jobs:
@@ -15,6 +15,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
-          curl -X POST "${SUPABASE_URL}/rest/v1/rpc/ping" \
-          -H "apikey: ${SUPABASE_KEY}" \
-          -H "Authorization: Bearer ${SUPABASE_KEY}"
+          response=$(curl -X POST "${SUPABASE_URL}/rest/v1/rpc/ping" \
+            -H "apikey: ${SUPABASE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_KEY}")
+          echo "Response: $response"
