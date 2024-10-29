@@ -1,0 +1,21 @@
+name: Supabase Keepalive
+on:
+  schedule:
+    # Ejecutar cada 12 horas
+    - cron: '* * * * *'
+  workflow_dispatch: # Permite ejecutar el workflow manualmente
+
+jobs:
+  ping_database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Realizar ping a la base de datos
+        run: |
+          curl --request GET \
+          --url 'https://${{ secrets.SUPABASE_PROJECT_ID }}.supabase.co/rest/v1/' \
+          --header 'apikey: ${{ secrets.SUPABASE_ANON_KEY }}' \
+          --header 'Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}'
+
+env:
+  SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
