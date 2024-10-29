@@ -6,16 +6,27 @@ on:
   workflow_dispatch: # Permite ejecutar el workflow manualmente
 
 jobs:
-  ping_database:
+  ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Realizar ping a la base de datos
-        run: |
-          curl --request GET \
-          --url '${{ secrets.SUPABASE_URL }}/rest/v1/' \
-          --header 'apikey: ${{ secrets.SUPABASE_ANON_KEY }}' \
-          --header 'Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}'
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-env:
-  SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
-  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install @supabase/supabase-js
+
+      - name: Ping Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_PROJECT_ID }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          node -e "
+          const { createClient } = require('@supabase/supabase-js');
+          const supabase = createClient(process.env.SUPABASE_PROJECT_ID, process.env.SUPABASE_ANON_KEY);
+          supabase.from('keep_awake').select('id').limit(1).then(console.log).catch(console.error);
+          "
