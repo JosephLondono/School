@@ -2,7 +2,7 @@ name: Supabase Keepalive
 on:
   schedule:
     # Ejecutar cada 12 horas
-    - cron: '* * * * *'
+    - cron: '0 0 * * 1'
   workflow_dispatch: # Permite ejecutar el workflow manualmente
 
 jobs:
