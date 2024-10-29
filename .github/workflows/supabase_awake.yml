@@ -12,7 +12,7 @@ jobs:
       - name: Realizar ping a la base de datos
         run: |
           curl --request GET \
-          --url 'https://${{ secrets.SUPABASE_PROJECT_ID }}.supabase.co/rest/v1/' \
+          --url '${{ secrets.SUPABASE_URL }}/rest/v1/' \
           --header 'apikey: ${{ secrets.SUPABASE_ANON_KEY }}' \
           --header 'Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}'
 
