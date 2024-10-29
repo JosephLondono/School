@@ -1,0 +1,20 @@
+name: Keep Supabase Database Awake
+
+on:
+  schedule:
+    # Ejecuta la tarea cada semana, el lunes a las 00:00
+    - cron: "0 0 * * 1"
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Keep Supabase Awake
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          curl -X POST "${SUPABASE_URL}/rest/v1/rpc/ping" \
+          -H "apikey: ${SUPABASE_KEY}" \
+          -H "Authorization: Bearer ${SUPABASE_KEY}"
