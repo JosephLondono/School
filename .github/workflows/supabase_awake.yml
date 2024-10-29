@@ -11,22 +11,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - name: Install dependencies
         run: npm install @supabase/supabase-js
-
       - name: Ping Supabase
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_PROJECT_ID }}
+          SUPABASE_URL: https://${{ secrets.SUPABASE_PROJECT_ID }}.supabase.co
           SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           node -e "
           const { createClient } = require('@supabase/supabase-js');
-          const supabase = createClient(process.env.SUPABASE_PROJECT_ID, process.env.SUPABASE_ANON_KEY);
+          const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
           supabase.from('keep_awake').select('id').limit(1).then(console.log).catch(console.error);
           "
