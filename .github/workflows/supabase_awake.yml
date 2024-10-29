@@ -19,7 +19,7 @@ jobs:
         run: npm install @supabase/supabase-js
       - name: Ping Supabase
         env:
-          SUPABASE_URL: https://${{ secrets.SUPABASE_PROJECT_ID }}.supabase.co
+          SUPABASE_URL: ${{ secrets.SUPABASE_PROJECT_ID }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           node -e "
